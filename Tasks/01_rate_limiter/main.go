@@ -7,27 +7,30 @@ import (
 
 func main() {
 	rateLimit := CreateRateLimit(5 * time.Second)
-	rateLimit2 := CreateRateLimit(3 * time.Second)
 
-	for i := range 10 {
-		test1 := rateLimit("mohsen")
-		test2 := rateLimit2("amir")
+	for i := range 5 {
+		test := rateLimit("mohsen")
 
-		switch test1 {
+		switch test {
 		case true:
 			fmt.Printf("Mohsen %d: ALLOWED\n", i+1)
 		case false:
 			fmt.Printf("Mohsen %d: DENIED\n", i+1)
 		}
 
-		switch test2 {
+		time.Sleep(1 * time.Second)
+	}
+
+	for i := range 10 {
+		test := rateLimit("amir")
+
+		switch test {
 		case true:
-			fmt.Printf("Akbar %d: ALLOWED\n", i+1)
+			fmt.Printf("amir %d: ALLOWED\n", i+1)
 		case false:
-			fmt.Printf("Akbar %d DENIED\n", i+1)
+			fmt.Printf("amir %d: DENIED\n", i+1)
 		}
 
-		fmt.Println("---")
 		time.Sleep(1 * time.Second)
 	}
 }

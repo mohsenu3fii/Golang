@@ -2,7 +2,7 @@ package main
 
 import "time"
 
-func CreateRateLimit(duration time.Duration) func(string) bool { // تغییر: bool به جای string
+func CreateRateLimit(duration time.Duration) func(string) bool {
 	type User struct {
 		name      string
 		vote_time time.Time
@@ -10,7 +10,7 @@ func CreateRateLimit(duration time.Duration) func(string) bool { // تغییر: 
 
 	already_voted := make(map[string]*User)
 
-	return func(username string) bool { // تغییر: bool به جای string
+	return func(username string) bool {
 		user, exist := already_voted[username]
 		now := time.Now()
 
