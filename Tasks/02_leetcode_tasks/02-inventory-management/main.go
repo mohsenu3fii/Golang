@@ -9,6 +9,13 @@ type Product struct {
 	Price    float64
 }
 
+type ProductP struct {
+	ID       *int
+	Name     *string
+	Quantity *int
+	Price    *float64
+}
+
 func main() {
 	inventory := make(map[int]*Product)
 
@@ -26,6 +33,15 @@ func main() {
 
 	quantity, exists := CheckStock(inventory, 3)
 	fmt.Printf("quantity is : %d, and exists status is: %v\n", quantity, exists)
+
+	// totalValue := CalculateTotalValue(inventory)
+	// fmt.Println("total value is:", totalValue)
+	a := 1
+	b := 2
+	product := ProductP{ID: &a, Quantity: &b}
+	update := product.UpdateProduct(inventory, 1)
+	// update := UpdateProduct(inventory,1})
+	fmt.Println(update)
 
 	totalValue := CalculateTotalValue(inventory)
 	fmt.Println("total value is:", totalValue)

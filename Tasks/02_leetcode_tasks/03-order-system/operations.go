@@ -1,5 +1,11 @@
 package main
 
+const (
+	Processing = "processing"
+	Complete   = "completed"
+	Cancelled  = "cancelled"
+)
+
 func CalculateSubtotal(order Order) float64 {
 	// Sum of (Quantity * Price) for all items
 	var subtotal float64
@@ -13,18 +19,19 @@ func (order *Order) ApplyDiscountRules(rules []DiscountRule) Order {
 	// Check if order total meets minimum for each rule
 	// Apply the maximum possible discount
 	// Update order.Discount and order.Total
-
-	best_rule_index := 0
-	discount_matched := false
-	order.SubTotal = CalculateSubtotal(*order)
-	for i, value := range rules {
-		if order.SubTotal > value.MinAmount {
-			discount_matched = true
-			best_rule_index = i
+	if len(rules) > 0 {
+		best_rule_index := 0
+		discount_matched := false
+		order.SubTotal = CalculateSubtotal(*order)
+		for i, value := range rules {
+			if order.SubTotal > value.MinAmount {
+				discount_matched = true
+				best_rule_index = i
+			}
 		}
-	}
-	if discount_matched {
-		order.Discount = order.SubTotal * (rules[best_rule_index].DiscountPercent / 100)
+		if discount_matched {
+			order.Discount = order.SubTotal * (rules[best_rule_index].DiscountPercent / 100)
+		}
 	}
 	return *order
 
@@ -36,7 +43,7 @@ func ProcessOrders(orders []Order, rules []DiscountRule) []Order {
 		orderPointer := &orders[i]
 
 		// 1. Change status to "processing"
-		orderPointer.Status = "processing"
+		orderPointer.Status = Processing
 
 		// 2. Apply discount
 		orderPointer.ApplyDiscountRules(rules)
@@ -47,9 +54,9 @@ func ProcessOrders(orders []Order, rules []DiscountRule) []Order {
 		// 4. Change status to "completed"
 		// If order total is less than 0, set status to "cancelled"
 		if orderPointer.FinalPrice <= 0 {
-			orderPointer.Status = "cancelled"
+			orderPointer.Status = Cancelled
 		} else {
-			orderPointer.Status = "completed"
+			orderPointer.Status = Complete
 		}
 	}
 	return orders
@@ -81,7 +88,7 @@ func CalculateOrderStatistics(orders []Order) map[string]interface{} {
 	}
 
 	//   - "average_order_value": average order value
-	if total_orders > 0 {
+	if len(orders) > 0 {
 		average_order_value = total_revenue / float64(total_orders)
 	}
 
