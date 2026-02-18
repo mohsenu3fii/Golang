@@ -8,7 +8,13 @@ inventory:
 	cd Tasks/02_leetcode_tasks/02-inventory-management && go run .
 
 order-system:
-	cd Tasks/02_leetcode_tasks/03-order-system && go run .¬
+	cd Tasks/02_leetcode_tasks/03-order-system && go run .
 
 stack:
 	cd Tasks/03_stack && go run main.go
+
+product-catalog:
+	cd Tasks/04_chapter6/01-product-catalog && go run .
+
+order-processing:
+	cd Tasks/04_chapter6/02-order-processing && go run .
