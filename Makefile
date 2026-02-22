@@ -18,3 +18,6 @@ product-catalog:
 
 order-processing:
 	cd Tasks/04_chapter6/02-order-processing && go run .
+
+liskov:
+	cd Tasks/04_chapter6/03-liskov-interface && go run main.go
