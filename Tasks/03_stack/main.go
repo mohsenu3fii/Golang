@@ -20,7 +20,7 @@ func (stack *Stack) Add(element any) {
 func (stack *Stack) Remove() {
 	if ok := stack.IsEmpty(); !ok {
 		stack.Data = stack.Data[:len(stack.Data)-1]
-		fmt.Println("item added to stack: ", stack.Data[:len(stack.Data)-1])
+		fmt.Println("item removed to stack: ", stack.Data[:len(stack.Data)-1])
 	}
 	fmt.Println("stack is empty!")
 }
