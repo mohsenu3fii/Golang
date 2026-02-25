@@ -19,6 +19,10 @@ func (order *Order) ApplyDiscountRules(rules []DiscountRule) Order {
 	// Check if order total meets minimum for each rule
 	// Apply the maximum possible discount
 	// Update order.Discount and order.Total
+
+	//check nil safe
+	//if order == nil{return Order{}}
+	//if rules == nil {return Order{}}
 	if len(rules) > 0 {
 		best_rule_index := 0
 		discount_matched := false
@@ -46,6 +50,7 @@ func ProcessOrders(orders []Order, rules []DiscountRule) []Order {
 		orderPointer.Status = Processing
 
 		// 2. Apply discount
+		//This method returns value, where did you use its value?
 		orderPointer.ApplyDiscountRules(rules)
 
 		// 3. Calculate final total
@@ -53,11 +58,17 @@ func ProcessOrders(orders []Order, rules []DiscountRule) []Order {
 
 		// 4. Change status to "completed"
 		// If order total is less than 0, set status to "cancelled"
+
+		//staus := Complete
 		if orderPointer.FinalPrice <= 0 {
-			orderPointer.Status = Cancelled
-		} else {
-			orderPointer.Status = Complete
-		}
+			//staus = Cancelled   use this
+			orderPointer.Status = Cancelled //remove this line
+		} else {//remove this line
+			orderPointer.Status = Complete //remove this line
+		}//remove this line
+
+
+		orderPointer.Status = staus
 	}
 	return orders
 }
@@ -65,7 +76,10 @@ func ProcessOrders(orders []Order, rules []DiscountRule) []Order {
 func FilterOrdersByStatus(orders []Order, status string) []Order {
 	// Return only orders with the specified status
 	query_matched := make([]Order, 0)
+
+	//Use also can use this for _, order := range orders{
 	for i := range orders {
+		//if order.Status === status{ .......
 		if orders[i].Status == status {
 			query_matched = append(query_matched, orders[i])
 		}
@@ -93,6 +107,7 @@ func CalculateOrderStatistics(orders []Order) map[string]interface{} {
 	}
 
 	//   - "completed_orders": number of completed orders
+	//Use const for handle this "completed", use custom type
 	completed_orders = len(FilterOrdersByStatus(orders, "completed"))
 
 	//   - "total_orders": total number of orders
