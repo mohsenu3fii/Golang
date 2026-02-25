@@ -21,3 +21,6 @@ order-processing:
 
 liskov:
 	cd Tasks/04_chapter6/03-liskov-interface && go run main.go
+
+oms:
+	cd Tasks/05_OMS && go run .
